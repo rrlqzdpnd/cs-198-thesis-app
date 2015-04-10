@@ -7,13 +7,6 @@
     android:padding="14px"
     tools:context="eqpineda.dooraccesssystem.AddKey">
 
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Enter 16-character Authentication String:"-->
-        <!--android:textSize="28px"-->
-        <!--android:paddingBottom="14px"/>-->
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

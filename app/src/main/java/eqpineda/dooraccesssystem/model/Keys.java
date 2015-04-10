@@ -6,26 +6,18 @@ package eqpineda.dooraccesssystem.model;
 public class Keys {
     int keyid;
     String authstring;
-    String insertedon;
     boolean isdeleted;
+    String insertedon;
 
     public Keys() {}
 
-    public Keys(String authstring, String insertedon) {
+    public Keys(String authstring) {
         this.authstring = authstring;
-        this.insertedon = insertedon;
-        this.isdeleted = false;
-    }
-
-    public Keys(int keyid, String authstring, String insertedon) {
-        this.keyid = keyid;
-        this.authstring = authstring;
-        this.insertedon = insertedon;
         this.isdeleted = false;
     }
 
     // Setters
-    public void setKeyId(int keyid) {
+    public void setKeyid(int keyid) {
         this.keyid = keyid;
     }
 
@@ -33,12 +25,12 @@ public class Keys {
         this.authstring = authstring;
     }
 
-    public void setInsertedon(String insertedon) {
-        this.insertedon = insertedon;
-    }
-
     public void setIsdeleted(boolean isdeleted) {
         this.isdeleted = isdeleted;
+    }
+
+    public void setInsertedon(String insertedon) {
+        this.insertedon = insertedon;
     }
 
     // Getters
@@ -52,5 +44,9 @@ public class Keys {
 
     public boolean getIsdeleted() {
         return this.isdeleted;
+    }
+
+    public String getInsertedon() {
+        return this.insertedon;
     }
 }
