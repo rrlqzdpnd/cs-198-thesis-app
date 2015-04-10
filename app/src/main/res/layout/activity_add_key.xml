@@ -1,0 +1,30 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="14px"
+    tools:context="eqpineda.dooraccesssystem.AddKey">
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Enter 16-character Authentication String:"-->
+        <!--android:textSize="28px"-->
+        <!--android:paddingBottom="14px"/>-->
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/new_key_id"
+        android:hint="Enter Auth String here"
+        android:textSize="21px" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Key"
+        android:onClick="addKey" />
+
+</LinearLayout>
