@@ -14,6 +14,13 @@
         android:hint="Enter Auth String here"
         android:textSize="21px" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/key_desc_id"
+        android:hint="Enter Key Description here"
+        android:textSize="21px" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

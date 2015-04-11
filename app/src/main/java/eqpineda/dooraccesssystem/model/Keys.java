@@ -6,13 +6,15 @@ package eqpineda.dooraccesssystem.model;
 public class Keys {
     int keyid;
     String authstring;
+    String description;
     boolean isdeleted;
     String insertedon;
 
     public Keys() {}
 
-    public Keys(String authstring) {
+    public Keys(String authstring, String description) {
         this.authstring = authstring;
+        this.description = description;
         this.isdeleted = false;
     }
 
@@ -23,6 +25,10 @@ public class Keys {
 
     public void setAuthstring(String authstring) {
         this.authstring = authstring;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setIsdeleted(boolean isdeleted) {
@@ -40,6 +46,10 @@ public class Keys {
 
     public String getAuthstring() {
         return this.authstring;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
     public boolean getIsdeleted() {
