@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import eqpineda.dooraccesssystem.helper.DatabaseHelper;
 import eqpineda.dooraccesssystem.model.Keys;
@@ -44,7 +45,7 @@ public class AddKey extends ActionBarActivity {
                 @Override
                 public CharSequence filter(CharSequence input, int arg1, int arg2, Spanned arg3,
                                            int arg4, int arg5) {
-                    return validate(input.toString());
+                    return validateKey(input.toString());
                 }
             }
         });
@@ -55,16 +56,24 @@ public class AddKey extends ActionBarActivity {
         String authKey = eText.getText().toString();
         eText = (EditText)findViewById(R.id.key_desc_id);
         String desc = eText.getText().toString();
-        Keys key = new Keys(authKey, desc);
-        db = new DatabaseHelper(getApplicationContext());
-        db.insertKey(key);
 
-        setResult(RESULT_OK, null);
-        this.finish();
-        return;
+        if(authKey.equalsIgnoreCase("") || desc.trim().equalsIgnoreCase(""))
+            Toast.makeText(getApplicationContext(), "All fields required.", Toast.LENGTH_SHORT)
+                    .show();
+        else if(authKey.length() < 16)
+            Toast.makeText(getApplicationContext(), "Authentication Key needs to be 16 characters" +
+                    " long.", Toast.LENGTH_SHORT).show();
+        else {
+            Keys key = new Keys(authKey, desc);
+            db = new DatabaseHelper(getApplicationContext());
+            db.insertKey(key);
+
+            setResult(RESULT_OK, null);
+            this.finish();
+        }
     }
 
-    private CharSequence validate(String s) {
+    private CharSequence validateKey(String s) {
         this.tmp = this.input + s;
         if(this.tmp.length() > 16) // max length of 16 characters
             return "";

@@ -12,19 +12,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/new_key_id"
         android:hint="Enter Auth String here"
-        android:textSize="21px" />
+        android:maxLength="16"
+        android:textSize="14sp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/key_desc_id"
         android:hint="Enter Key Description here"
-        android:textSize="21px" />
+        android:textSize="14sp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Key"
+        android:text="@string/title_activity_add_key"
         android:onClick="addKey" />
 
 </LinearLayout>

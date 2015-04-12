@@ -56,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Inserts authKey to table
-     * @param key
+     * @param key Keys object to be inserted into the table
      * @return keyId of inserted key
      */
     public long insertKey(Keys key) {
@@ -73,11 +73,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Gets all active keys
-     * @return
+     * @return List of Keys object
      */
     public List<Keys> getKeys() {
-        List<Keys> keys = new ArrayList<Keys>();
-        String query = "SELECT * FROM " + TBL_KEYS + " WHERE " + TBL_KEYS_ISDELETED + " = 0";
+        List<Keys> keys = new ArrayList<>();
+        String query = "SELECT * FROM " + TBL_KEYS + " WHERE " + TBL_KEYS_ISDELETED + " = 0 ORDER" +
+                " BY " + TBL_KEYS_INSERTEDON + " DESC";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(query, null);
@@ -93,8 +94,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 keys.add(key);
             } while(c.moveToNext());
         }
+        c.close();
 
         return keys;
+    }
+
+    public Keys getKeyDetails(int keyId) {
+        Keys key = null;
+        String query = "SELECT * FROM " + TBL_KEYS + " WHERE " + TBL_KEYS_ISDELETED + " = 0 AND " + TBL_KEYS_KEYID + " = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(query, new String[] { keyId + "" });
+
+        if(c.getCount() == 1) {
+            c.moveToFirst();
+            key = new Keys();
+            key.setKeyid(c.getInt(c.getColumnIndex(TBL_KEYS_KEYID)));
+            key.setAuthstring(c.getString(c.getColumnIndex(TBL_KEYS_AUTHSTRING)));
+            key.setDescription(c.getString(c.getColumnIndex(TBL_KEYS_DESCRIPTION)));
+            key.setInsertedon(c.getString(c.getColumnIndex(TBL_KEYS_INSERTEDON)));
+        }
+
+        c.close();
+        db.close();
+
+        return key;
+    }
+
+    public void clearAll() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.delete(TBL_KEYS, null, null);
+        db.close();
     }
 
     private String getDateTime() {

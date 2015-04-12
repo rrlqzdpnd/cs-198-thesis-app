@@ -5,8 +5,12 @@
         android:title="Add New Key"
         android:orderInCategory="1"
         app:showAsAction="never" />
+    <item android:id="@+id/action_delete_all_keys"
+        android:title="Delete All Keys"
+        android:orderInCategory="2"
+        app:showAsAction="never" />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         app:showAsAction="never" />
 </menu>

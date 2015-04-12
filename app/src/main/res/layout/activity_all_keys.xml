@@ -9,34 +9,12 @@
         android:id="@+id/linearLayout"
         android:orientation="vertical"
         android:layout_height="fill_parent">
-        <Button
-            android:id="@+id/btnAll"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="All" />
-        <Button
-            android:id="@+id/btnBarAndRes"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="Bar Restaurants"
-            android:layout_toRightOf="@+id/btnAll" />
-        <Button
-            android:id="@+id/btnFashion"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="FashionBeauty"
-            android:layout_toRightOf="@+id/btnBarAndRes" />
-        <Button
-            android:id="@+id/btnParty"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="Party/Entertainment"
-            android:layout_toRightOf="@+id/btnFashion" />
-        <Button
-            android:id="@+id/btnLife"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="Life Style"
-            android:layout_toRightOf="@+id/btnParty" />
+            android:gravity="center_horizontal"
+            android:padding="35dp"
+            android:textSize="18sp"
+            android:text="@string/no_keys" />
     </LinearLayout>
 </ScrollView>
