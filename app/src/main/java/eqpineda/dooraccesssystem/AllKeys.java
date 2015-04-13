@@ -1,15 +1,16 @@
 package eqpineda.dooraccesssystem;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -37,11 +38,25 @@ public class AllKeys extends ActionBarActivity {
                 for(Keys key : keys) {
                     Button b = new Button(getApplicationContext());
                     b.setText(key.getDescription());
+                    b.getBackground().setColorFilter(0xFFCACACA, PorterDuff.Mode.LIGHTEN);
+                    b.setTextColor(0xFF222222);
+
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(0, 0, 0, 4);
+                    b.setLayoutParams(params);
+
+                    b.setTag(key.getKeyid());
+                    b.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AllKeys.this.keyDetails(v);
+                        }
+                    });
+
                     layout.addView(b);
                 }
-//                Button b = new Button(getApplicationContext());
-//                b.setText("Test");
-//                layout.addView(b);
             }
         }
     }
@@ -104,25 +119,7 @@ public class AllKeys extends ActionBarActivity {
         }
     }
 
-    public class DeleteAllDialog extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder alertbox = new AlertDialog.Builder(getActivity());
-            alertbox.setMessage("Delete all existing keys?")
-                    .setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "Keys successfully deleted!",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    });
-            return alertbox.create();
-        }
+    public void keyDetails(View v) {
+        Log.i("PRESSED", "Button for key " + v.getTag() +  " was pressed");
     }
 }

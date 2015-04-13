@@ -8,7 +8,8 @@
         android:layout_width="fill_parent"
         android:id="@+id/linearLayout"
         android:orientation="vertical"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:padding="14px">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -16,5 +17,9 @@
             android:padding="35dp"
             android:textSize="18sp"
             android:text="@string/no_keys" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_activity_add_key" />
     </LinearLayout>
 </ScrollView>
