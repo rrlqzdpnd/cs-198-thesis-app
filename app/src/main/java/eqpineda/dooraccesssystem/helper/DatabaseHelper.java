@@ -20,23 +20,25 @@ import eqpineda.dooraccesssystem.model.Keys;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database name
-    public static final String DATABASE_NAME = "userkeys";
+    private static final String DATABASE_NAME = "userkeys";
 
     // Database version
-    public static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     // Keys table
-    public static final String TBL_KEYS = "keys";
-    public static final String TBL_KEYS_KEYID = "keyid";
-    public static final String TBL_KEYS_AUTHSTRING = "authstring";
-    public static final String TBL_KEYS_DESCRIPTION = "description";
-    public static final String TBL_KEYS_INSERTEDON = "insertedon";
-    public static final String TBL_KEYS_ISDELETED = "isdeleted";
+    private static final String TBL_KEYS = "keys";
+    private static final String TBL_KEYS_KEYID = "keyid";
+    private static final String TBL_KEYS_AUTHSTRING = "authstring";
+    private static final String TBL_KEYS_DESCRIPTION = "description";
+    private static final String TBL_KEYS_NOTES = "notes";
+    private static final String TBL_KEYS_INSERTEDON = "insertedon";
+    private static final String TBL_KEYS_ISDELETED = "isdeleted";
 
-    public static final String CREATE_TBL_KEYS = "CREATE TABLE " + TBL_KEYS + "( " + TBL_KEYS_KEYID
+    private static final String CREATE_TBL_KEYS = "CREATE TABLE " + TBL_KEYS + "( " + TBL_KEYS_KEYID
             + " INTEGER PRIMARY KEY NOT NULL, " + TBL_KEYS_AUTHSTRING + " VARCHAR(16) NOT NULL, "
-            + TBL_KEYS_DESCRIPTION + " TEXT NOT NULL, " + TBL_KEYS_INSERTEDON + " DATETIME, "
-            + TBL_KEYS_ISDELETED + " INTEGER NOT NULL DEFAULT 0 )";
+            + TBL_KEYS_DESCRIPTION + " VARCHAR(32) NOT NULL, " + TBL_KEYS_NOTES + " TEXT, "
+            + TBL_KEYS_INSERTEDON + " DATETIME, " + TBL_KEYS_ISDELETED
+            + " INTEGER NOT NULL DEFAULT 0 )";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -65,6 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(TBL_KEYS_AUTHSTRING, key.getAuthstring());
         values.put(TBL_KEYS_DESCRIPTION, key.getDescription());
+        values.put(TBL_KEYS_NOTES, key.getNotes());
         values.put(TBL_KEYS_ISDELETED, key.getIsdeleted());
         values.put(TBL_KEYS_INSERTEDON, getDateTime());
 
@@ -89,6 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 key.setKeyid(c.getInt(c.getColumnIndex(TBL_KEYS_KEYID)));
                 key.setAuthstring(c.getString(c.getColumnIndex(TBL_KEYS_AUTHSTRING)));
                 key.setDescription(c.getString(c.getColumnIndex(TBL_KEYS_DESCRIPTION)));
+                key.setNotes(c.getString(c.getColumnIndex(TBL_KEYS_NOTES)));
                 key.setInsertedon(c.getString(c.getColumnIndex(TBL_KEYS_INSERTEDON)));
 
                 keys.add(key);
@@ -111,6 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             key.setKeyid(c.getInt(c.getColumnIndex(TBL_KEYS_KEYID)));
             key.setAuthstring(c.getString(c.getColumnIndex(TBL_KEYS_AUTHSTRING)));
             key.setDescription(c.getString(c.getColumnIndex(TBL_KEYS_DESCRIPTION)));
+            key.setNotes(c.getString(c.getColumnIndex(TBL_KEYS_NOTES)));
             key.setInsertedon(c.getString(c.getColumnIndex(TBL_KEYS_INSERTEDON)));
         }
 

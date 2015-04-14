@@ -29,8 +29,8 @@ public class AllKeys extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_keys);
 
-        db = new DatabaseHelper(getApplicationContext());
-        List<Keys> keys = db.getKeys();
+        this.db = new DatabaseHelper(getApplicationContext());
+        List<Keys> keys = this.db.getKeys();
         if(keys.size() > 0) {
             LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout);
             if(layout != null) {
@@ -86,7 +86,7 @@ public class AllKeys extends ActionBarActivity {
                 alertBox.setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        db.clearAll();
+                        AllKeys.this.db.clearAll();
                         Intent refresh = new Intent(AllKeys.this, AllKeys.class);
                         startActivity(refresh);
                         finish();
@@ -120,6 +120,10 @@ public class AllKeys extends ActionBarActivity {
     }
 
     public void keyDetails(View v) {
-        Log.i("PRESSED", "Button for key " + v.getTag() +  " was pressed");
+        int keyID = (int)v.getTag();
+//        Log.i("PRESSED", "Button for key " + keyID +  " was pressed");
+        Intent intent = new Intent(this, KeyDescription.class);
+        intent.putExtra("KEYID", keyID);
+        startActivity(intent);
     }
 }

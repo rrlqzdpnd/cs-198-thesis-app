@@ -5,4 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_key">Add Key</string>
     <string name="no_keys">No Keys available</string>
+    <string name="title_activity_key_description">Key Description</string>
+    <string name="delete_key">Delete Key</string>
 </resources>

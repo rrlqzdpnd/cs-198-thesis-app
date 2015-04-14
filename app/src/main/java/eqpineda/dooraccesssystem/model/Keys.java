@@ -4,11 +4,12 @@ package eqpineda.dooraccesssystem.model;
  * Created by eqpineda on 4/10/15.
  */
 public class Keys {
-    int keyid;
-    String authstring;
-    String description;
-    boolean isdeleted;
-    String insertedon;
+    private int keyid;
+    private String authstring;
+    private String description;
+    private String notes;
+    private boolean isdeleted;
+    private String insertedon;
 
     public Keys() {}
 
@@ -31,6 +32,10 @@ public class Keys {
         this.description = description;
     }
 
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public void setIsdeleted(boolean isdeleted) {
         this.isdeleted = isdeleted;
     }
@@ -50,6 +55,10 @@ public class Keys {
 
     public String getDescription() {
         return this.description;
+    }
+
+    public String getNotes() {
+        return this.notes;
     }
 
     public boolean getIsdeleted() {
