@@ -52,8 +52,8 @@ public class KeyDescription extends ActionBarActivity {
         int id = item.getItemId();
 
         switch(id) {
-            case R.id.action_settings:
-                return true;
+//            case R.id.action_settings:
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

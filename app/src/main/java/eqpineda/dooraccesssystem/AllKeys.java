@@ -73,8 +73,8 @@ public class AllKeys extends ActionBarActivity {
         int id = item.getItemId();
 
         switch(id) {
-            case R.id.action_settings:
-                return true;
+//            case R.id.action_settings:
+//                return true;
             case R.id.action_add_key:
                 Intent intent = new Intent(this, AddKey.class);
                 startActivityForResult(intent, 1);
