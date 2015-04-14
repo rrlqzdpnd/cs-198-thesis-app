@@ -1,10 +1,19 @@
 <resources>
     <string name="app_name">Door Access System</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_add_key">Add Key</string>
-    <string name="no_keys">No Keys available</string>
     <string name="title_activity_key_description">Key Description</string>
-    <string name="delete_key">Delete Key</string>
+
+    <string name="activity_all_keys_no_keys_available">No Keys Available</string>
+    <string name="menu_all_keys_add_key">Add New Key</string>
+    <string name="menu_all_keys_delete_all_keys">Delete All Keys</string>
+
+    <string name="activity_add_key_input_authstring">Enter Auth String here</string>
+    <string name="activity_add_key_input_desc">Enter Key Description here</string>
+    <string name="activity_add_key_input_notes">Enter notes for this key</string>
+
+    <string name="activity_key_description_key_desc">Key Description</string>
+    <string name="activity_key_description_key_notes">Notes</string>
+    <string name="menu_key_description_delete_key">Delete Key</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

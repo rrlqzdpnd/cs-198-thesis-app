@@ -8,7 +8,7 @@
     tools:context="eqpineda.dooraccesssystem.KeyDescription">
 
     <TextView
-        android:text="Key Description"
+        android:text="@string/activity_key_description_key_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold" />
@@ -22,7 +22,7 @@
         android:layout_marginTop="5dp" />
 
     <TextView
-        android:text="Notes"
+        android:text="@string/activity_key_description_key_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold" />

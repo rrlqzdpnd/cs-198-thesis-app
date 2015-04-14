@@ -16,6 +16,6 @@
             android:gravity="center_horizontal"
             android:padding="35dp"
             android:textSize="18sp"
-            android:text="@string/no_keys" />
+            android:text="@string/activity_all_keys_no_keys_available" />
     </LinearLayout>
 </ScrollView>
