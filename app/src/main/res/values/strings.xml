@@ -13,6 +13,7 @@
 
     <string name="activity_key_description_key_desc">Key Description</string>
     <string name="activity_key_description_key_notes">Notes</string>
+    <string name="activity_key_description_authenticate">Authenticate</string>
     <string name="menu_key_description_delete_key">Delete Key</string>
 
     <string name="action_settings">Settings</string>

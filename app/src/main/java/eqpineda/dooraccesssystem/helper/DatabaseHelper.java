@@ -125,6 +125,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return key;
     }
 
+    public void deleteKey(int keyId) {
+        String where = TBL_KEYS_KEYID + " = ?";
+        String[] whereArgs = { keyId + "" };
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.delete(TBL_KEYS, where, whereArgs);
+        db.close();
+    }
+
     public void clearAll() {
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(TBL_KEYS, null, null);
