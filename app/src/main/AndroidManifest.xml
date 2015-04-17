@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eqpineda.dooraccesssystem" >
 
+    <!-- Android NFC permissions -->
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:maxSdkVersion="17"/>
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,6 +24,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter"/>
         </activity>
         <activity
             android:name=".AddKey"
@@ -27,6 +44,14 @@
         <activity
             android:name=".KeyDescription"
             android:label="@string/title_activity_key_description"
+            android:parentActivityName=".AllKeys" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="eqpineda.dooraccesssystem.AllKeys" />
+        </activity>
+        <activity
+            android:name=".ReadCard"
+            android:label="@string/title_activity_read_card"
             android:parentActivityName=".AllKeys" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

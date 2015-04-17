@@ -2,6 +2,7 @@
     <string name="app_name">Door Access System</string>
     <string name="title_activity_add_key">Add Key</string>
     <string name="title_activity_key_description">Key Description</string>
+    <string name="title_activity_read_card">Read Card</string>
 
     <string name="activity_all_keys_no_keys_available">No Keys Available</string>
     <string name="menu_all_keys_add_key">Add New Key</string>

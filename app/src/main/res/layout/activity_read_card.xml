@@ -1,0 +1,13 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:id="@+id/linearLayout"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:padding="14dp">
+   <Button
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:onClick="getAuthString"
+       android:text="Get Auth String"/>
+</LinearLayout>

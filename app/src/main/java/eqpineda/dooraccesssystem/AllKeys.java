@@ -71,12 +71,13 @@ public class AllKeys extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Intent intent;
 
         switch(id) {
 //            case R.id.action_settings:
 //                return true;
             case R.id.action_add_key:
-                Intent intent = new Intent(this, AddKey.class);
+                intent = new Intent(this, AddKey.class);
                 startActivityForResult(intent, 1);
                 return true;
             case R.id.action_delete_all_keys:
@@ -103,6 +104,10 @@ public class AllKeys extends ActionBarActivity {
 
                 AlertDialog dialog = alertBox.create();
                 dialog.show();
+                return true;
+            case R.id.action_read_card:
+                intent = new Intent(this, ReadCard.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
