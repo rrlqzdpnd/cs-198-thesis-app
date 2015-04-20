@@ -1,6 +1,8 @@
 package eqpineda.dooraccesssystem;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
@@ -14,8 +16,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
 
 public class ReadCard extends ActionBarActivity {
@@ -25,18 +29,20 @@ public class ReadCard extends ActionBarActivity {
     private NfcAdapter adapter;
     private Tag tag;
 
-    private static final int[][] keys = {
-            { 0x50, 0x49, 0x4e, 0x41, 0x44, 0x4f },
-            { 0x31, 0x32, 0x31, 0x32, 0x31, 0x32 },
-            { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff },
-            { 0xd3, 0xf7, 0xd3, 0xf7, 0xd3, 0xf7 },
-            { 0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5 },
-            { 0xb0, 0xb1, 0xb2, 0xb3, 0xb4, 0xb5 },
-            { 0x4d, 0x3a, 0x99, 0xc3, 0x51, 0xdd },
-            { 0x1a, 0x98, 0x2c, 0x7e, 0x45, 0x9a },
-            { 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff },
-            { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-            { 0xa0, 0xb0, 0xc0, 0xd0, 0xe0, 0xf0 }
+    private final byte[][] keys = {
+            { (byte)0x50, (byte)0x49, (byte)0x4e, (byte)0x41, (byte)0x44, (byte)0x4f },
+            { (byte)0x31, (byte)0x32, (byte)0x31, (byte)0x32, (byte)0x31, (byte)0x32 },
+            { (byte)0x31, (byte)0x31, (byte)0x31, (byte)0x31, (byte)0x31, (byte)0x32 },
+            // Default keys
+            { (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff },
+            { (byte)0xd3, (byte)0xf7, (byte)0xd3, (byte)0xf7, (byte)0xd3, (byte)0xf7 },
+            { (byte)0xa0, (byte)0xa1, (byte)0xa2, (byte)0xa3, (byte)0xa4, (byte)0xa5 },
+            { (byte)0xb0, (byte)0xb1, (byte)0xb2, (byte)0xb3, (byte)0xb4, (byte)0xb5 },
+            { (byte)0x4d, (byte)0x3a, (byte)0x99, (byte)0xc3, (byte)0x51, (byte)0xdd },
+            { (byte)0x1a, (byte)0x98, (byte)0x2c, (byte)0x7e, (byte)0x45, (byte)0x9a },
+            { (byte)0xaa, (byte)0xbb, (byte)0xcc, (byte)0xdd, (byte)0xee, (byte)0xff },
+            { (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00 },
+            { (byte)0xa0, (byte)0xb0, (byte)0xc0, (byte)0xd0, (byte)0xe0, (byte)0xf0 }
     };
 
     @Override
@@ -76,22 +82,44 @@ public class ReadCard extends ActionBarActivity {
                 .show();
     }
 
-    public void getAuthString(View view) {
+    public void getAuthString(View view) throws IOException {
         if(this.tag == null)
             Toast.makeText(getApplicationContext(), "No RFID initialized.", Toast.LENGTH_SHORT)
                     .show();
         else {
-            MifareClassic card = MifareClassic.get(this.tag);
-            if(authA(card) && authB(card))
-                Log.i("AUTH", "Successfully authenticated sector");
+            try {
+                MifareClassic card = MifareClassic.get(this.tag);
+                card.connect();
+                if (authCard(card, true) && authCard(card, false)) {
+                    Log.i("AUTH", "Successfully authenticated sector");
+
+                    byte[] authString = card.readBlock(1);
+                    Toast.makeText(getApplicationContext(), Arrays.toString(authString),
+                            Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Log.i("AUTH", "Access denied");
+
+                card.close();
+            }
+            catch(IOException ex) {
+                Toast.makeText(getApplication(), "Error reading card. Please try again.",
+                        Toast.LENGTH_SHORT).show();
+                Log.e("AUTH", "Something went wrong when authenticating card, please check if" +
+                        " card is placed properly.");
+            }
         }
     }
 
-    private boolean authA(MifareClassic card) {
-        return true;
-    }
+    private boolean authCard(MifareClassic card, boolean isSectorA) throws IOException {
+        for(byte[] x: this.keys) {
+            boolean b = (isSectorA) ? card.authenticateSectorWithKeyA(0, x)
+                                    : card.authenticateSectorWithKeyB(0, x);
 
-    private boolean authB(MifareClassic card) {
-        return true;
+            if(b)
+                return true;
+        }
+
+        return false;
     }
 }
