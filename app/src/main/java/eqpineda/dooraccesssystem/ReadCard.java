@@ -11,15 +11,18 @@ import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-//import android.util.Log;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
+
+import eqpineda.dooraccesssystem.helper.DatabaseHelper;
 
 
 public class ReadCard extends ActionBarActivity {
@@ -67,7 +70,7 @@ public class ReadCard extends ActionBarActivity {
     @Override
     public void onResume() {
         super.onResume();
-        this.adapter.enableForegroundDispatch(this, pendingIntent, filters, techs);
+        this.adapter.enableForegroundDispatch(this, this.pendingIntent, this.filters, this.techs);
     }
 
     @Override
@@ -94,8 +97,48 @@ public class ReadCard extends ActionBarActivity {
                     Log.i("AUTH", "Successfully authenticated sector");
 
                     byte[] authString = card.readBlock(1);
-                    Toast.makeText(getApplicationContext(), Arrays.toString(authString),
-                            Toast.LENGTH_SHORT).show();
+                    String auth = convertToString(authString);
+
+                    LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+                    AlertDialog.Builder keyDescDialog = new AlertDialog.Builder(
+                            this);
+                    keyDescDialog.setTitle("Add New Key from Card");
+                    keyDescDialog.setView(inflater.inflate(
+                            R.layout.activity_read_card_description_alert, null));
+                    keyDescDialog.setPositiveButton("Confirm",
+                            new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            EditText editText = (EditText)findViewById(R.id.key_desc);
+                            String desc = editText.getText().toString();
+
+                            Toast.makeText(getApplicationContext(), desc, Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+                    keyDescDialog.setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {}
+                    });
+                    final AlertDialog keyDesc = keyDescDialog.create();
+
+                    AlertDialog.Builder addKeyDialog = new AlertDialog.Builder(this);
+                    addKeyDialog.setTitle("Add Key");
+                    addKeyDialog.setMessage("Do you want to add the key of this RFID to" +
+                            " your list of keys?");
+                    addKeyDialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            keyDesc.show();
+                        }
+                    });
+                    addKeyDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {}
+                    });
+                    AlertDialog addKey = addKeyDialog.create();
+                    addKey.show();
                 }
                 else
                     Log.i("AUTH", "Access denied");
@@ -121,5 +164,11 @@ public class ReadCard extends ActionBarActivity {
         }
 
         return false;
+    }
+
+    private String convertToString(byte[] array) {
+        if(array.length == 0)
+            return "";
+        return (char)array[0] + convertToString(Arrays.copyOfRange(array, 1, array.length));
     }
 }
