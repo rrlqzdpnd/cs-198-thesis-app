@@ -27,9 +27,6 @@ public class KeyDescription extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_key_description);
 
-        Button b = (Button)findViewById(R.id.action_authenticate);
-        b.getBackground().setColorFilter(0xFF81F78B, PorterDuff.Mode.MULTIPLY);
-
         Intent intent = getIntent();
         int keyId = intent.getIntExtra("KEYID", -1);
         if(keyId != -1) {

@@ -5,9 +5,16 @@
     android:orientation="vertical"
     android:padding="14dp"
     android:id="@+id/linearLayout">
-   <Button
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:onClick="getAuthString"
-       android:text="Get Auth String"/>
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Insert key for PIN here"
+        android:maxLength="6"
+        android:textSize="14sp"
+        android:id="@+id/card_pin"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getAuthString"
+        android:text="Get Auth String"/>
 </LinearLayout>
