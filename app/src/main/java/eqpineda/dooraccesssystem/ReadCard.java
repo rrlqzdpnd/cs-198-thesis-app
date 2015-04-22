@@ -100,16 +100,17 @@ public class ReadCard extends ActionBarActivity {
                     String auth = convertToString(authString);
 
                     LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+                    final View v = inflater.inflate(R.layout.activity_read_card_description_alert,
+                            null);
                     AlertDialog.Builder keyDescDialog = new AlertDialog.Builder(
                             this);
                     keyDescDialog.setTitle("Add New Key from Card");
-                    keyDescDialog.setView(inflater.inflate(
-                            R.layout.activity_read_card_description_alert, null));
+                    keyDescDialog.setView(v);
                     keyDescDialog.setPositiveButton("Confirm",
                             new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            EditText editText = (EditText)findViewById(R.id.key_desc);
+                            EditText editText = (EditText)v.findViewById(R.id.key_desc);
                             String desc = editText.getText().toString();
 
                             Toast.makeText(getApplicationContext(), desc, Toast.LENGTH_SHORT)
