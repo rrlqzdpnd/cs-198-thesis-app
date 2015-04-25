@@ -35,16 +35,16 @@ public class ReadCard extends ActionBarActivity {
             { (byte)0x50, (byte)0x49, (byte)0x4e, (byte)0x41, (byte)0x44, (byte)0x4f },
             { (byte)0x31, (byte)0x32, (byte)0x31, (byte)0x32, (byte)0x31, (byte)0x32 },
 //            { (byte)0x31, (byte)0x31, (byte)0x31, (byte)0x31, (byte)0x31, (byte)0x32 },
-            // Default keys
-//            { (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff },
-//            { (byte)0xd3, (byte)0xf7, (byte)0xd3, (byte)0xf7, (byte)0xd3, (byte)0xf7 },
-//            { (byte)0xa0, (byte)0xa1, (byte)0xa2, (byte)0xa3, (byte)0xa4, (byte)0xa5 },
-//            { (byte)0xb0, (byte)0xb1, (byte)0xb2, (byte)0xb3, (byte)0xb4, (byte)0xb5 },
-//            { (byte)0x4d, (byte)0x3a, (byte)0x99, (byte)0xc3, (byte)0x51, (byte)0xdd },
-//            { (byte)0x1a, (byte)0x98, (byte)0x2c, (byte)0x7e, (byte)0x45, (byte)0x9a },
-//            { (byte)0xaa, (byte)0xbb, (byte)0xcc, (byte)0xdd, (byte)0xee, (byte)0xff },
-//            { (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00 },
-//            { (byte)0xa0, (byte)0xb0, (byte)0xc0, (byte)0xd0, (byte)0xe0, (byte)0xf0 },
+//            Default keys
+            { (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff },
+            { (byte)0xd3, (byte)0xf7, (byte)0xd3, (byte)0xf7, (byte)0xd3, (byte)0xf7 },
+            { (byte)0xa0, (byte)0xa1, (byte)0xa2, (byte)0xa3, (byte)0xa4, (byte)0xa5 },
+            { (byte)0xb0, (byte)0xb1, (byte)0xb2, (byte)0xb3, (byte)0xb4, (byte)0xb5 },
+            { (byte)0x4d, (byte)0x3a, (byte)0x99, (byte)0xc3, (byte)0x51, (byte)0xdd },
+            { (byte)0x1a, (byte)0x98, (byte)0x2c, (byte)0x7e, (byte)0x45, (byte)0x9a },
+            { (byte)0xaa, (byte)0xbb, (byte)0xcc, (byte)0xdd, (byte)0xee, (byte)0xff },
+            { (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00 },
+            { (byte)0xa0, (byte)0xb0, (byte)0xc0, (byte)0xd0, (byte)0xe0, (byte)0xf0 },
     };
 
     @Override
@@ -54,7 +54,7 @@ public class ReadCard extends ActionBarActivity {
 
         this.pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
                 new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        IntentFilter mifare = new IntentFilter((NfcAdapter.ACTION_TECH_DISCOVERED));
+        IntentFilter mifare = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
         this.filters = new IntentFilter[] { mifare };
         this.techs = new String[][] { new String[] {  NfcA.class.getName() } };
         this.adapter = NfcAdapter.getDefaultAdapter(this);

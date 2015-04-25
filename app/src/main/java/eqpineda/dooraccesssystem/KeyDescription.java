@@ -1,9 +1,16 @@
 package eqpineda.dooraccesssystem;
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PorterDuff;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.NfcA;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +28,23 @@ import eqpineda.dooraccesssystem.model.Keys;
 public class KeyDescription extends ActionBarActivity {
     private Keys key = null;
     private DatabaseHelper db;
+    private IntentFilter[] filters;
+    private String[][] techs;
+    private PendingIntent pendingIntent;
+    private NfcAdapter adapter;
+    private Tag tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_key_description);
+
+        this.pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
+                new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        IntentFilter mifare = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+        this.filters = new IntentFilter[] { mifare };
+        this.techs = new String[][] { new String[] {  NfcA.class.getName() } };
+        this.adapter = NfcAdapter.getDefaultAdapter(this);
 
         Intent intent = getIntent();
         int keyId = intent.getIntExtra("KEYID", -1);
@@ -44,7 +63,6 @@ public class KeyDescription extends ActionBarActivity {
             this.finish();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,7 +107,33 @@ public class KeyDescription extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.adapter.disableForegroundDispatch(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.adapter.enableForegroundDispatch(this, this.pendingIntent, this.filters, this.techs);
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        this.tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        byte[] id = this.tag.getId();
+        Toast.makeText(getApplicationContext(), "Penis",
+                Toast.LENGTH_SHORT).show();
+    }
+
     public void authenticate(View view) {
-        Log.i("AUTH", "User is authenticating using key " + this.key.getAuthstring());
+        if (!this.adapter.isEnabled()) {
+            startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
+        } else if (!this.adapter.isNdefPushEnabled()) {
+            startActivity(new Intent(Settings.ACTION_NFCSHARING_SETTINGS));
+        }
+
+
     }
 }
