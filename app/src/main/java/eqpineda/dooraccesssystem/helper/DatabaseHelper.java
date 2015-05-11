@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteTransactionListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,30 +14,28 @@ import java.util.Locale;
 
 import eqpineda.dooraccesssystem.model.Keys;
 
-/**
- * Created by eqpineda on 4/10/15.
- */
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database name
     private static final String DATABASE_NAME = "userkeys";
 
     // Database version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     // Keys table
     private static final String TBL_KEYS = "keys";
     private static final String TBL_KEYS_KEYID = "keyid";
     private static final String TBL_KEYS_AUTHSTRING = "authstring";
+    private static final String TBL_KEYS_PIN = "pin";
     private static final String TBL_KEYS_DESCRIPTION = "description";
     private static final String TBL_KEYS_NOTES = "notes";
     private static final String TBL_KEYS_INSERTEDON = "insertedon";
     private static final String TBL_KEYS_ISDELETED = "isdeleted";
 
     private static final String CREATE_TBL_KEYS = "CREATE TABLE " + TBL_KEYS + "( " + TBL_KEYS_KEYID
-            + " INTEGER PRIMARY KEY NOT NULL, " + TBL_KEYS_AUTHSTRING + " VARCHAR(16) NOT NULL, "
-            + TBL_KEYS_DESCRIPTION + " VARCHAR(32) NOT NULL, " + TBL_KEYS_NOTES + " TEXT, "
-            + TBL_KEYS_INSERTEDON + " DATETIME, " + TBL_KEYS_ISDELETED
-            + " INTEGER NOT NULL DEFAULT 0 )";
+            + " INTEGER PRIMARY KEY NOT NULL, " + TBL_KEYS_AUTHSTRING + " VARCHAR(16) NOT NULL, " +
+            TBL_KEYS_PIN + " VARCHAR(4) NOT NULL, " + TBL_KEYS_DESCRIPTION +
+            " VARCHAR(32) NOT NULL, " + TBL_KEYS_NOTES + " TEXT, " + TBL_KEYS_INSERTEDON +
+            " DATETIME, " + TBL_KEYS_ISDELETED + " INTEGER NOT NULL DEFAULT 0 )";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -66,6 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(TBL_KEYS_AUTHSTRING, key.getAuthstring());
+        values.put(TBL_KEYS_PIN, key.getPin());
         values.put(TBL_KEYS_DESCRIPTION, key.getDescription());
         values.put(TBL_KEYS_NOTES, key.getNotes());
         values.put(TBL_KEYS_ISDELETED, key.getIsdeleted());
@@ -91,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Keys key = new Keys();
                 key.setKeyid(c.getInt(c.getColumnIndex(TBL_KEYS_KEYID)));
                 key.setAuthstring(c.getString(c.getColumnIndex(TBL_KEYS_AUTHSTRING)));
+                key.setPin(c.getString(c.getColumnIndex(TBL_KEYS_PIN)));
                 key.setDescription(c.getString(c.getColumnIndex(TBL_KEYS_DESCRIPTION)));
                 key.setNotes(c.getString(c.getColumnIndex(TBL_KEYS_NOTES)));
                 key.setInsertedon(c.getString(c.getColumnIndex(TBL_KEYS_INSERTEDON)));
@@ -105,7 +104,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Keys getKeyDetails(int keyId) {
         Keys key = null;
-        String query = "SELECT * FROM " + TBL_KEYS + " WHERE " + TBL_KEYS_ISDELETED + " = 0 AND " + TBL_KEYS_KEYID + " = ?";
+        String query = "SELECT * FROM " + TBL_KEYS + " WHERE " + TBL_KEYS_ISDELETED + " = 0 AND " +
+                TBL_KEYS_KEYID + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(query, new String[] { keyId + "" });
 
@@ -114,6 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             key = new Keys();
             key.setKeyid(c.getInt(c.getColumnIndex(TBL_KEYS_KEYID)));
             key.setAuthstring(c.getString(c.getColumnIndex(TBL_KEYS_AUTHSTRING)));
+            key.setPin(c.getString(c.getColumnIndex(TBL_KEYS_PIN)));
             key.setDescription(c.getString(c.getColumnIndex(TBL_KEYS_DESCRIPTION)));
             key.setNotes(c.getString(c.getColumnIndex(TBL_KEYS_NOTES)));
             key.setInsertedon(c.getString(c.getColumnIndex(TBL_KEYS_INSERTEDON)));

@@ -8,13 +8,14 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Insert key for PIN here"
+        android:hint="@string/activity_read_card_pin_hint"
         android:maxLength="6"
         android:textSize="14sp"
+        android:inputType="numberPassword"
         android:id="@+id/card_pin"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="getAuthString"
-        android:text="Get Auth String"/>
+        android:text="@string/activity_read_card_button_text"/>
 </LinearLayout>

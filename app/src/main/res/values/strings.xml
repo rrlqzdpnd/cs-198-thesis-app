@@ -7,6 +7,7 @@
     <string name="activity_all_keys_no_keys_available">No Keys Available</string>
     <string name="menu_all_keys_add_key">Add New Key</string>
     <string name="menu_all_keys_delete_all_keys">Delete All Keys</string>
+    <string name="menu_all_keys_read_nfc">Read NFC Card</string>
 
     <string name="activity_add_key_input_authstring">Enter Auth String here</string>
     <string name="activity_add_key_input_desc">Enter Key Description here</string>
@@ -15,7 +16,13 @@
     <string name="activity_key_description_key_desc">Key Description</string>
     <string name="activity_key_description_key_notes">Notes</string>
     <string name="activity_key_description_authenticate">Authenticate</string>
+    <string name="activity_key_description_instruction">Tap phone to reader to send key</string>
     <string name="menu_key_description_delete_key">Delete Key</string>
+
+    <string name="activity_read_card_pin_hint">Insert key for PIN here</string>
+    <string name="activity_read_card_button_text">Get Auth String</string>"
+
+    <string name="activity_read_card_description_alert_hint">Enter Key Description here</string>
 
     <string name="action_settings">Settings</string>
 </resources>

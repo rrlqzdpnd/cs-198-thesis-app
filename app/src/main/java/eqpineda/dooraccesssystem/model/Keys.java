@@ -1,11 +1,9 @@
 package eqpineda.dooraccesssystem.model;
 
-/**
- * Created by eqpineda on 4/10/15.
- */
 public class Keys {
     private int keyid;
     private String authstring;
+    private String pin;
     private String description;
     private String notes;
     private boolean isdeleted;
@@ -13,8 +11,9 @@ public class Keys {
 
     public Keys() {}
 
-    public Keys(String authstring, String description) {
+    public Keys(String authstring, String pin, String description) {
         this.authstring = authstring;
+        this.pin = pin;
         this.description = description;
         this.isdeleted = false;
     }
@@ -26,6 +25,10 @@ public class Keys {
 
     public void setAuthstring(String authstring) {
         this.authstring = authstring;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 
     public void setDescription(String description) {
@@ -51,6 +54,10 @@ public class Keys {
 
     public String getAuthstring() {
         return this.authstring;
+    }
+
+    public String getPin() {
+        return this.pin;
     }
 
     public String getDescription() {

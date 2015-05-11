@@ -5,19 +5,16 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.PorterDuff;
 import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
 import android.nfc.Tag;
 import android.nfc.tech.NfcA;
-import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +22,8 @@ import eqpineda.dooraccesssystem.helper.DatabaseHelper;
 import eqpineda.dooraccesssystem.model.Keys;
 
 
-public class KeyDescription extends ActionBarActivity {
+public class KeyDescription extends ActionBarActivity
+        implements NfcAdapter.CreateNdefMessageCallback {
     private Keys key = null;
     private DatabaseHelper db;
     private IntentFilter[] filters;
@@ -45,6 +43,8 @@ public class KeyDescription extends ActionBarActivity {
         this.filters = new IntentFilter[] { mifare };
         this.techs = new String[][] { new String[] {  NfcA.class.getName() } };
         this.adapter = NfcAdapter.getDefaultAdapter(this);
+
+        this.adapter.setNdefPushMessageCallback(this, this);
 
         Intent intent = getIntent();
         int keyId = intent.getIntExtra("KEYID", -1);
@@ -122,18 +122,23 @@ public class KeyDescription extends ActionBarActivity {
     @Override
     public void onNewIntent(Intent intent) {
         this.tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        byte[] id = this.tag.getId();
-        Toast.makeText(getApplicationContext(), "Penis",
-                Toast.LENGTH_SHORT).show();
+//        byte[] id = this.tag.getId();
     }
 
-    public void authenticate(View view) {
-        if (!this.adapter.isEnabled()) {
-            startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
-        } else if (!this.adapter.isNdefPushEnabled()) {
-            startActivity(new Intent(Settings.ACTION_NFCSHARING_SETTINGS));
-        }
-
-
+    @Override
+    public NdefMessage createNdefMessage(NfcEvent nfcevent) {
+        NdefRecord ndefRecord = NdefRecord.createMime("text/plain",
+                ("\n" + this.key.getAuthstring()).getBytes());
+        return new NdefMessage(ndefRecord);
     }
+
+//    public void authenticate(View view) {
+//        if (!this.adapter.isEnabled()) {
+//            startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
+//        } else if (!this.adapter.isNdefPushEnabled()) {
+//            startActivity(new Intent(Settings.ACTION_NFCSHARING_SETTINGS));
+//        }
+//
+//
+//    }
 }

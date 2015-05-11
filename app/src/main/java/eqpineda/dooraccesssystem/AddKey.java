@@ -16,12 +16,14 @@ import eqpineda.dooraccesssystem.model.Keys;
 
 public class AddKey extends ActionBarActivity {
     private DatabaseHelper db;
-    private String keyTmp = "", keyInput = "", descTmp = "", descInput = "";
+    private String keyInput = "",  descInput = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_key);
+
+        this.db = new DatabaseHelper(getApplicationContext());
 
         EditText keyText = (EditText)findViewById(R.id.new_key_id);
         keyText.addTextChangedListener(new TextWatcher() {
@@ -92,11 +94,10 @@ public class AddKey extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "Key Description must of maximum 32 characters",
                     Toast.LENGTH_SHORT).show();
         else {
-            Keys key = new Keys(authKey, desc);
+            Keys key = new Keys(authKey, "0000", desc);
             if(!notes.trim().equalsIgnoreCase(""))
                 key.setNotes(notes);
 
-            this.db = new DatabaseHelper(getApplicationContext());
             this.db.insertKey(key);
 
             setResult(RESULT_OK, null);
@@ -105,22 +106,22 @@ public class AddKey extends ActionBarActivity {
     }
 
     private CharSequence validateKey(String s) {
-        this.keyTmp = this.keyInput + s;
-        if(this.keyTmp.length() > 16) // max length of 16 characters
+        String keyTmp = this.keyInput + s;
+        if(keyTmp.length() > 16) // max length of 16 characters
             return "";
-        else if(!this.keyTmp.matches("[a-zA-Z0-9]*")) // uses only alphanumeric characters as key
+        else if(!keyTmp.matches("[a-zA-Z0-9]*")) // uses only alphanumeric characters as key
             return "";
 
-        this.keyInput = this.keyTmp;
+        this.keyInput = keyTmp;
         return s;
     }
 
     private CharSequence validateDescription(String s) {
-        this.descTmp = this.descInput + s;
-        if(this.descTmp.length() > 32)
+        String descTmp = this.descInput + s;
+        if(descTmp.length() > 32)
             return "";
 
-        this.descInput = this.descTmp;
+        this.descInput = descTmp;
         return s.toUpperCase();
     }
 }

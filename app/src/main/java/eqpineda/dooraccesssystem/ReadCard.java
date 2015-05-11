@@ -82,7 +82,7 @@ public class ReadCard extends ActionBarActivity {
 
     public void getAuthString(View view) throws IOException {
         EditText editText = (EditText)findViewById(R.id.card_pin);
-        String pin = editText.getText().toString();
+        final String pin = editText.getText().toString();
 
         if(this.tag == null)
             Toast.makeText(getApplicationContext(), "No RFID initialized.", Toast.LENGTH_SHORT)
@@ -99,10 +99,10 @@ public class ReadCard extends ActionBarActivity {
         else {
             try {
                 MifareClassic card = MifareClassic.get(this.tag);
-                byte[][] pinByte = { convertToByteArray(pin) };
+                byte[][] pinByteArray = { convertToByteArray(pin) };
 
                 card.connect();
-                if (authCard(card, true, this.keys) && authCard(card, false, pinByte)) {
+                if (authCard(card, true, this.keys) && authCard(card, false, pinByteArray)) {
                     Log.i("AUTH", "Successfully authenticated sector");
 
                     byte[] authString = card.readBlock(1);
@@ -123,7 +123,7 @@ public class ReadCard extends ActionBarActivity {
                             String desc = editText.getText().toString().toUpperCase();
 
                             DatabaseHelper db = new DatabaseHelper(getApplicationContext());
-                            Keys key = new Keys(auth, desc);
+                            Keys key = new Keys(auth, pin, desc);
                             db.insertKey(key);
 
                             Intent home = new Intent(ReadCard.this, AllKeys.class);

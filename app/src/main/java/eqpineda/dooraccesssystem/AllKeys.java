@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,10 +75,10 @@ public class AllKeys extends ActionBarActivity {
         switch(id) {
 //            case R.id.action_settings:
 //                return true;
-            case R.id.action_add_key:
-                intent = new Intent(this, AddKey.class);
-                startActivityForResult(intent, 1);
-                return true;
+//            case R.id.action_add_key:
+//                intent = new Intent(this, AddKey.class);
+//                startActivityForResult(intent, 1);
+//                return true;
             case R.id.action_delete_all_keys:
                 AlertDialog.Builder alertBox = new AlertDialog.Builder(this);
                 alertBox.setTitle("Delete All Keys");

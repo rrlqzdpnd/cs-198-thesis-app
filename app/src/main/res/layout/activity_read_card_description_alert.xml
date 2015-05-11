@@ -7,7 +7,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Key Description here"
+        android:hint="@string/activity_read_card_description_alert_hint"
         android:maxLength="32"
         android:id="@+id/key_desc"/>
 </LinearLayout>
